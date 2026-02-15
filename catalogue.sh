@@ -5,7 +5,7 @@ logs_folder="/var/log/roboshop"
 log_file="$logs_folder/$0.log"
 command_type=$1
 start_time=$(date +%s)
-Working_dir=$PWD
+Working_dir="/home/ec2-user"
 Mongodb_host="mongodb.learndaws88s.online"
 
 set -e
