@@ -32,7 +32,7 @@ do
     fi
 
     aws route53 change-resource-record-sets \
-    --hosted-zone-id $ZONE_ID \
+    --hosted-zone-id $HOST_ID \
     --change-batch '
     {
         "Comment": "Updating record",
