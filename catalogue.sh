@@ -66,7 +66,7 @@ rm -rf $Working_dir/app/*
 
 unzip /tmp/catalogue.zip
 
-npm install -y &>> $log_file
+npm install
 
 cp $Working_dir/Roboshop/catalogue.service /etc/systemd/system/catalogue.service
 
@@ -84,7 +84,7 @@ dnf install mongodb-mongosh -y &>> $log_file
 INDEX=$(mongosh --host $Mongodb_host --quiet  --eval 'db.getMongo().getDBNames().indexOf("catalogue")')
 
 if [ $INDEX -le 0 ]; then
-    mongosh --host $Mongodb_host </app/db/master-data.js &>> $log_file
+    mongosh --host $Mongodb_host <$Working_dir/app/db/master-data.js &>> $log_file
 
 else
     echo -e "schem is already loaded ... $Y skipping $N" | tee -a $log_file
