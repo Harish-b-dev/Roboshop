@@ -70,11 +70,11 @@ npm install -y &>> $log_file
 
 cp $Working_dir/Roboshop/catalogue.service /etc/systemd/system/catalogue.service
 
-systemctl daemon-reload -y &>> $log_file
+systemctl daemon-reload
 
-systemctl enable catalogue -y &>> $log_file
+systemctl enable catalogue &>> $log_file
 
-systemctl start catalogue -y &>> $log_file
+systemctl start catalogue &>> $log_file
 VALIDATE $? "catalogue enabled ... started" | tee -a $log_file
 
 cp mongo.repo /etc/yum.repos.d/mongo.repo
