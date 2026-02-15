@@ -51,6 +51,6 @@ sed -i 's/127.0.0.1/0.0.0.0/g' /etc/mongod.conf
 systemctl restart mongod
 VALIDATE $? "started ... mongodb"
 
-end_time=$(date + %s)
-final_time=$((end_time - start_time))
+end_time=$(date +%s)
+final_time=$(($end_time - $start_time))
 echo "script executed at $final_time"
