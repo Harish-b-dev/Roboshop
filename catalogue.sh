@@ -86,3 +86,10 @@ else
 fi
 
 systemctl reload catalogue | tee -a $log_file
+VALIDATE $? "catalogue reloaded" | tee -a $log_file
+
+
+
+end_time=$(date +%s)
+final_time=$(($end_time - $start_time))
+echo "script executed at $final_time"
