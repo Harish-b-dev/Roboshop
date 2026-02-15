@@ -16,14 +16,14 @@ do
     --output text )
     
     if [ $instance == "frontend" ]; then
-        ID=$( aws ec2 describe-instances \
+        IP=$( aws ec2 describe-instances \
         --instance-ids $INSTANCE_ID \
         --query 'Reservations[0].Instances[0].PublicIpAddress' \
         --output text )
 
         Record_name="$Record"
     else
-        ID=$( aws ec2 describe-instances \
+        IP=$( aws ec2 describe-instances \
         --instance-ids "$INSTANCE_ID" \
         --query 'Reservations[0].Instances[0].PrivateIpAddress' \
         --output text )
@@ -31,9 +31,8 @@ do
         Record_name="$instance.$Record"
     fi
 
-    echo "Updating Route 53 record for $Record_name with IP $IP..."
     aws route53 change-resource-record-sets \
-    --hosted-zone-id $HOST_ID \
+    --hosted-zone-id $ZONE_ID \
     --change-batch '
     {
         "Comment": "Updating record",
@@ -46,18 +45,19 @@ do
                 "TTL": 1,
                 "ResourceRecords": [
                 {
-                    "Value": '"$IP"'
+                    "Value": "'$IP'"
                 }
                 ]
             }
             }
         ]
-    }'
+    }
+    '
+
+    echo "record updated for $instance"
 
 
     
 done
-
-echo "IP ADDRESS :: $ID"
 
 
