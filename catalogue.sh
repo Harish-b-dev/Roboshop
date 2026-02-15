@@ -48,7 +48,7 @@ VALIDATE $? "nodejs version 20 enabled"
 dnf install nodejs -y
 VALIDATE $? "nodejs installed" | tee -a $log_file
 
-useradd --system --home /app --shell /sbin/nologin --comment "roboshop system user" roboshop -y &>> $log_file
+useradd --system --home /app --shell /sbin/nologin --comment "roboshop system user" roboshop
 
 mkdir -p /app 
 
