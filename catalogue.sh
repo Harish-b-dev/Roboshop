@@ -68,7 +68,7 @@ unzip /tmp/catalogue.zip
 
 npm install -y &>> $log_file
 
-cp catalogue.service /etc/systemd/system/catalogue.service
+cp $Working_dir/Roboshop/catalogue.service /etc/systemd/system/catalogue.service
 
 systemctl daemon-reload -y &>> $log_file
 
