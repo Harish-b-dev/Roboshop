@@ -1,4 +1,4 @@
-#!/bin/shell
+#!/bin/bash
 
 AMI_ID="ami-0220d79f3f480ecf5"
 SECURITY_ID="sg-0de4bc98ac346b345"
@@ -25,7 +25,7 @@ do
     else
         ID=$( aws ec2 describe-instances \
         --instance-ids "$INSTANCE_ID" \
-        --query 'Reservations[0].Instances[0].privateIpAddress' \
+        --query 'Reservations[0].Instances[0].PrivateIpAddress' \
         --output text )
 
         echo "public id :: $ID"
