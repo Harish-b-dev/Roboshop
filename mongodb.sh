@@ -4,6 +4,7 @@ user=$(id -u)
 logs_folder="/var/log/roboshop"
 log_file="$logs_folder/$0.log"
 command_type=$1
+start_time=$((date + %s))
 
 R="\e[31m"
 G="\e[32m"
@@ -11,7 +12,7 @@ Y="\e[33m"
 B="\e[34m"
 N="\e[0m"
 
-echo -e " command passed ... $B $command_type $N"
+echo -e " script execution started now ... $B $command_type $N"
 
 sudo mkdir -p $logs_folder
 
@@ -25,15 +26,16 @@ fi
 
 VALIDATE(){
     if [ $1 -ne 0 ]; then
-        echo -e "$R $2 $N  installation ... failure " | tee -a $log_file
+        echo -e "$R $2 $N ... failure " | tee -a $log_file
         exit 1
     else
-        echo -e "$G $2 $N installation ... success" | tee -a $log_file
+        echo -e "$G $2 $N ... success" | tee -a $log_file
     fi
 }
 
 
 cp mongo.repo /etc/yum/repos.d/mongo.repo
+VALIDATE $? "mongodb repo updated"
 
 dnf install mongodb-org -y 
 VALIDATE $? "Installing ... mongodb"
@@ -48,3 +50,7 @@ sed -i 's/127.0.0.1/0.0.0.0/g' /etc/mongod.conf
 
 systemctl restart mongod
 VALIDATE $? "started ... mongodb"
+
+end_time=$((date + %s))
+final_time=$((end_time - start_time))
+echo "script executed at $final_time"
