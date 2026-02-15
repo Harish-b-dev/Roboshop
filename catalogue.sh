@@ -66,7 +66,7 @@ rm -rf $Working_dir/app/*
 
 unzip /tmp/catalogue.zip
 
-npm install
+npm install &>> $log_file
 
 cp $Working_dir/Roboshop/catalogue.service /etc/systemd/system/catalogue.service
 
