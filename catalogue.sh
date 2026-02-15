@@ -54,6 +54,7 @@ if [ $? -ne 0 ]; then
     VALIDATE $? "adding user"
 else
     echo "Roboshop user already exists"
+fi
 
 mkdir -p /app 
 
