@@ -2,6 +2,8 @@
 
 AMI_ID="ami-0220d79f3f480ecf5"
 SECURITY_ID="sg-0de4bc98ac346b345"
+HOST_ID="Z04935093G1ODXCG494LF"
+Record="learndaws88s.online"
 
 for instance in $@
 do
@@ -19,15 +21,43 @@ do
         --query 'Reservations[0].Instances[0].PublicIpAddress' \
         --output text )
 
+        Record_name="$Record"
     else
         ID=$( aws ec2 describe-instances \
         --instance-ids "$INSTANCE_ID" \
         --query 'Reservations[0].Instances[0].PrivateIpAddress' \
         --output text )
-    
+
+        Record_name="$instance.$Record"
     fi
+
+    CHANGE_BATCH_JSON='
+    {
+        "Comment": "Updating record",
+        "Changes": [
+            {
+            "Action": "UPSERT",
+            "ResourceRecordSet": {
+                "Name": "'$Record_name'",
+                "Type": "A",
+                "TTL": 1,
+                "ResourceRecords": [
+                {
+                    "Value": '"$IP"'
+                }
+                ]
+            }
+            }
+        ]
+    }'
+
+
+    echo "Updating Route 53 record for $Record_name with IP $IP..."
+    aws route53 change-resource-record-sets \
+        --hosted-zone-id "$HOST_ID" \
+        --change-batch "$CHANGE_BATCH_JSON"
 done
 
-
+echo "IP ADDRESS :: $ID"
 
 
