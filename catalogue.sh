@@ -8,8 +8,8 @@ start_time=$(date +%s)
 Working_dir="/home/ec2-user"
 Mongodb_host="mongodb.learndaws88s.online"
 
-set -e
-trap 'echo "there is an error at $LINENO, command :: $BASH_COMMAND"' ERR
+#set -e
+#trap 'echo "there is an error at $LINENO, command :: $BASH_COMMAND"' ERR
 
 R="\e[31m"
 G="\e[32m"
