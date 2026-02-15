@@ -48,7 +48,12 @@ VALIDATE $? "nodejs version 20 enabled"
 dnf install nodejs -y
 VALIDATE $? "nodejs installed" | tee -a $log_file
 
-useradd --system --home /app --shell /sbin/nologin --comment "roboshop system user" roboshop
+id roboshop &>> $log_file
+if [ $? -ne 0 ]; then
+    useradd --system --home /app --shell /sbin/nologin --comment "roboshop system user" roboshop
+    VALIDATE $? "adding user"
+else
+    echo "Roboshop user already exists"
 
 mkdir -p /app 
 
