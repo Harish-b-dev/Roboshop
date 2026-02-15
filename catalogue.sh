@@ -56,7 +56,7 @@ else
     echo "Roboshop user already exists"
 fi
 
-mkdir -p /app 
+mkdir -p $Working_dir/app 
 
 
 curl -o /tmp/catalogue.zip https://roboshop-artifacts.s3.amazonaws.com/catalogue-v3.zip 
