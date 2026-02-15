@@ -4,7 +4,7 @@ user=$(id -u)
 logs_folder="/var/log/roboshop"
 log_file="$logs_folder/$0.log"
 command_type=$1
-start_time=$((date + %s))
+start_time=$(date +%s)
 
 R="\e[31m"
 G="\e[32m"
@@ -51,6 +51,6 @@ sed -i 's/127.0.0.1/0.0.0.0/g' /etc/mongod.conf
 systemctl restart mongod
 VALIDATE $? "started ... mongodb"
 
-end_time=$((date + %s))
+end_time=$(date + %s)
 final_time=$((end_time - start_time))
 echo "script executed at $final_time"
