@@ -31,7 +31,10 @@ do
         Record_name="$instance.$Record"
     fi
 
-    CHANGE_BATCH_JSON='
+    echo "Updating Route 53 record for $Record_name with IP $IP..."
+    aws route53 change-resource-record-sets \
+    --hosted-zone-id $HOST_ID \
+    --change-batch '
     {
         "Comment": "Updating record",
         "Changes": [
@@ -52,10 +55,7 @@ do
     }'
 
 
-    echo "Updating Route 53 record for $Record_name with IP $IP..."
-    aws route53 change-resource-record-sets \
-        --hosted-zone-id "$HOST_ID" \
-        --change-batch "$CHANGE_BATCH_JSON"
+    
 done
 
 echo "IP ADDRESS :: $ID"
