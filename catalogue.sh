@@ -84,7 +84,7 @@ dnf install mongodb-mongosh -y &>> $log_file
 INDEX=$(mongosh --host $Mongodb_host --quiet  --eval 'db.getMongo().getDBNames().indexOf("catalogue")')
 
 if [ $INDEX -le 0 ]; then
-    mongosh --host $Mongo </app/db/master-data.js &>> $log_file
+    mongosh --host $Mongodb_host </app/db/master-data.js &>> $log_file
 
 else
     echo -e "schem is already loaded ... $Y skipping $N" | tee -a $log_file
