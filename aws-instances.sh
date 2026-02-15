@@ -29,6 +29,8 @@ do
             --output text}
 
         echo "public id :: $ID"
+    
+    fi
 done
 
 
