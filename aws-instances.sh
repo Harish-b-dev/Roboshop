@@ -7,17 +7,17 @@ SECURITY_ID=sg-0de4bc98ac346b345
 for instance in $@
 do
     INSTANCE_ID=$(aws ec2 run-instances \ 
-        --image-id  $AMI_ID \
+        --image-id $AMI_ID \
         --count 1 \
         --instance-type t3.micro \
-        --security-group-ids  $SECURITY_ID \
+        --security-group-ids $SECURITY_ID \
         --tag-specifications "ResourceType=instance,Tags=[{Key=Name,Value=$instance}]" \
         --query 'Instances[0].InstanceId' \
         --output text)
     
     if [$instance == "frontend" ]; then
         ID=$(aws ec2 describe-instances \
-            --instance-ids "$INSTANCE_ID" \
+            --instance-ids $INSTANCE_ID \
             --query 'Reservations[0].Instances[0].PublicIpAddress' \
             --output text)
         
