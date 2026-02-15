@@ -38,17 +38,17 @@ cp mongo.repo /etc/yum.repos.d/mongo.repo
 VALIDATE $? "mongodb repo updated"
 
 dnf install mongodb-org -y 
-VALIDATE $? "Installing ... mongodb"
+VALIDATE $? "Installing ... mongodb" &>> $log_file
 
-systemctl enable mongod 
+systemctl enable mongod &>> $log_file
 VALIDATE $? "enabled ... mongodb"
 
-systemctl start mongod
+systemctl start mongod &>> $log_file
 VALIDATE $? "started ... mongodb"
 
 sed -i 's/127.0.0.1/0.0.0.0/g' /etc/mongod.conf
 
-systemctl restart mongod
+systemctl restart mongod &>> $log_file
 VALIDATE $? "started ... mongodb"
 
 end_time=$(date +%s)
