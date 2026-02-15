@@ -50,7 +50,7 @@ VALIDATE $? "nodejs installed" | tee -a $log_file
 
 id roboshop &>> $log_file
 if [ $? -ne 0 ]; then
-    useradd --system --home /app --shell /sbin/nologin --comment "roboshop system user" roboshop
+    useradd --system --home /app --shell /sbin/nologin --comment "roboshop system user" roboshop &>> $log_file
     VALIDATE $? "adding user"
 else
     echo "Roboshop user already exists"
