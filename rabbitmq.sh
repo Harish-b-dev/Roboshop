@@ -56,7 +56,7 @@ if [ $? -ne 0 ]; then
     VALIDATE $? "rabbitmq-server permissions set up"
 
 else
-    echo -e "$Y Skipping ... user name, password, permissions $N set up are already updated in rabbitmq-server"
+    echo -e "$Y Skipping ... user name, password, permissions$N set up are already updated in rabbitmq-server"
 
 fi
 
