@@ -51,12 +51,12 @@ fi
 mkdir -p /app 
 
 
-curl -L -o /tmp/payment.zip https://roboshop-artifacts.s3.amazonaws.com/payment-v3.zip 
+curl -L -o /tmp/payment.zip https://roboshop-artifacts.s3.amazonaws.com/payment-v3.zip &>> $log_file
 cd /app
 
 rm -rf /app/*
 
-unzip /tmp/payment.zip
+unzip /tmp/payment.zip &>> $log_file
 
 pip3 install -r requirements.txt &>> $log_file
 
@@ -67,10 +67,10 @@ systemctl daemon-reload
 systemctl enable payment &>> $log_file
 
 systemctl start payment &>> $log_file
-VALIDATE $? "payment enabled ... started" | tee -a $log_file
+VALIDATE $? "payment enabled ... started"
 
 systemctl restart payment &>> $log_file
-VALIDATE $? "payment restart" | tee -a $log_file
+VALIDATE $? "payment restart"
 
 
 

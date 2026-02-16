@@ -40,7 +40,7 @@ VALIDATE(){
 
 
 
-dnf install maven -y&>> $log_file
+dnf install maven -y &>> $log_file
 VALIDATE $? "maven installed"
 
 id roboshop &>> $log_file
@@ -54,12 +54,12 @@ fi
 mkdir -p /app 
 
 
-curl -L -o /tmp/shipping.zip https://roboshop-artifacts.s3.amazonaws.com/shipping-v3.zip
+curl -L -o /tmp/shipping.zip https://roboshop-artifacts.s3.amazonaws.com/shipping-v3.zip &>> $log_file
 cd /app
 
 rm -rf /app/*
 
-unzip /tmp/shipping.zip
+unzip /tmp/shipping.zip &>> $log_file
 
 mvn clean package &>> $log_file
 mv target/shipping-1.0.jar shipping.jar
@@ -86,7 +86,7 @@ SCHEMA_FILE="/app/db/schema.sql"
 
 # 1. Check if a specific database exists (e.g., 'cities')
 # Replace 'cities' with the actual database name used in your schema
-mysql -h $mysql_host -u$DB_USER -p$DB_PASS -e "SHOW DATABASES LIKE 'cities';" | grep -w "cities" &>> $log_file
+mysql -h $mysql_host -u$DB_USER -p$DB_PASS -e 'use cities' &>> $log_file
 
 if [ $? -ne 0 ]; then
     echo "Schema not found. Loading schema..."
