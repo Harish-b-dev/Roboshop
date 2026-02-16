@@ -46,8 +46,8 @@ else
 
 fi
 
-systemctl enable nginx &>> $log_file
-systemctl start nginx &>> $log_file
+systemctl enable nginx 
+systemctl start nginx 
 VALIDATE $? "Nginx enabled and started"
 
 rm -rf /usr/share/nginx/html/*
