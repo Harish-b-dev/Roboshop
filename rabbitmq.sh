@@ -55,5 +55,7 @@ if [ $? -eq 0 ]; then
     rabbitmqctl set_permissions -p / roboshop ".*" ".*" ".*"
     VALIDATE $? "rabbitmq-server permissions set up"
 
-else:
+else
     echo "$Y Skipping ... user name, password, permissions $N set up are already updated in rabbitmq-server"
+
+fi
