@@ -41,7 +41,6 @@ dnf install nginx -y &>> $log_file
 VALIDATE $? "Nginx version 1.24 ... installation"
 
 systemctl enable nginx
-systemctl start nginx
 VALIDATE $? "Nginx enabled and started" 
 
 rm -rf /usr/share/nginx/html/*
@@ -57,7 +56,7 @@ rm -rf /etc/nginx/nginx.conf
 cp /home/ec2-user/Roboshop/nginx.conf /etc/nginx/nginx.conf
 VALIDATE $? "nginx.conf updated"
 
-systemctl restart nginx
+systemctl start nginx
 VALIDATE $? "Nginx restart"
 
 end_time=$(date +%s)
