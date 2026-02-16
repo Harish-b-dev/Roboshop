@@ -42,30 +42,27 @@ VALIDATE $? "Mysql server ... enable"
 systemctl start mysqld 
 VALIDATE $? "Mysql server ... start" 
 
-
-
-
-# 1. Try to connect WITHOUT a password (checks if it's currently empty)
-mysql -u root -e "exit" &> /dev/null
+# 1. Try to connect with the CORRECT password first
+mysql -u root -p'RoboShop@1' -e "exit" &> /dev/null
 
 if [ $? -eq 0 ]; then
-    echo -e "STATUS: MySQL root password is $Y NOT set $N. Setting it now..."
-    
-    # Use the non-interactive way to set the password
-    mysql_secure_installation --set-root-pass RoboShop@1
-    VALIDATE $? "MySQL root password setup"
+    echo -e "STATUS: MySQL root password is ${G}ALREADY set correctly${N}."
 else
-    # 2. If empty login fails, check if it's already set to RoboShop@1
-    mysql -u root -p'RoboShop@1' -e "exit" &> /dev/null
+    echo -e "STATUS: MySQL root password ${Y}NOT set or WRONG${N}. Attempting reset..."
     
-    if [ $? -eq 0 ]; then
-        echo -e "STATUS: MySQL root password is $G ALREADY set correctly $N."
-    else
-        echo -e "STATUS: $R Unknown Password! $N Root password is set to something else."
-        exit 1
+    # 2. Try to set the password (works if current password is empty)
+    mysql_secure_installation --set-root-pass RoboShop@1 &>> $log_file
+    
+    # 3. If the above fails, it might be using the default temp password 
+    # (Common in new MySQL 8.0 installs)
+    if [ $? -ne 0 ]; then
+        echo -e "STATUS: Standard reset failed. Checking for temporary password..."
+        TEMP_PASS=$(grep 'temporary password' /var/log/mysqld.log | awk '{print $NF}')
+        mysql --connect-expired-password -u root -p"$TEMP_PASS" \
+            -e "ALTER USER 'root'@'localhost' IDENTIFIED BY 'RoboShop@1';" &>> $log_file
     fi
-fi
-
+    
+    VALIDATE $? "MySQL root password setup"
 
 end_time=$(date +%s)
 final_time=$(($end_time - $start_time))
