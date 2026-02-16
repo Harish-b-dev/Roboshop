@@ -41,7 +41,7 @@ VALIDATE(){
 
 
 dnf install maven -y&>> $log_file
-VALIDATE $? "nodejs installed"
+VALIDATE $? "maven installed"
 
 id roboshop &>> $log_file
 if [ $? -ne 0 ]; then
