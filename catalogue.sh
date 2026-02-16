@@ -84,14 +84,14 @@ dnf install mongodb-mongosh -y &>> $log_file
 INDEX=$(mongosh --host $Mongodb_host --quiet  --eval 'db.getMongo().getDBNames().indexOf("catalogue")')
 
 if [ $INDEX -le 0 ]; then
-    mongosh --host $Mongodb_host <$Working_dir/app/db/master-data.js &>> $log_file
+    mongosh --host $Mongodb_host </app/db/master-data.js &>> $log_file
 
 else
     echo -e "schem is already loaded ... $Y skipping $N" | tee -a $log_file
 
 fi
 
-systemctl reload catalogue | tee -a $log_file
+systemctl reload catalogue &>> $log_file
 VALIDATE $? "catalogue reloaded" | tee -a $log_file
 
 
