@@ -53,7 +53,7 @@ cd /usr/share/nginx/html
 unzip /tmp/frontend.zip
 VALIDATE $? "Nginx page unziped"
 
-rm -rf /etc/nginx/nginx.conf
+#rm -rf /etc/nginx/nginx.conf
 
 cp $Working_dir/nginx.conf /etc/nginx/nginx.conf
 VALIDATE $? "nginx.conf updated" &>> $log_file
