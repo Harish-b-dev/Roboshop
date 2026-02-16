@@ -92,7 +92,7 @@ else
 fi
 
 systemctl reload catalogue &>> $log_file
-VALIDATE $? "catalogue reloaded" | tee -a $log_file
+VALIDATE $? "catalogue reload" | tee -a $log_file
 
 
 
