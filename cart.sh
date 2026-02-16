@@ -77,7 +77,7 @@ systemctl enable cart &>> $log_file
 systemctl start cart &>> $log_file
 VALIDATE $? "cart enabled ... started" | tee -a $log_file
 
-systemctl restart user &>> $log_file
+systemctl restart cart &>> $log_file
 VALIDATE $? "user restart" | tee -a $log_file
 
 
