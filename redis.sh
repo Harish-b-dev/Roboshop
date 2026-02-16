@@ -39,7 +39,7 @@ dnf list installed redis
 if [ $? -ne 0 ]; then
     dnf module disable redis -y
     dnf module enable redis:7 -y
-    dnf install redis -y 
+    dnf install redis -y &>> $log_file
     VALIDATE $? "redis version 7 ... installation"
 
 else
@@ -54,3 +54,7 @@ sed -i 's/protected-mode yes/protected-mode no/g' /etc/redis/redis.conf
 systemctl enable redis &>> $log_file
 systemctl start redis &>> $log_file
 VALIDATE $? "redis enabled and started"
+
+end_time=$(date +%s)
+final_time=$(($end_time - $start_time))
+echo "script executed at $final_time"

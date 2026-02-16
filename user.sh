@@ -45,12 +45,12 @@ dnf module enable nodejs:20 -y &>> $log_file
 VALIDATE $? "nodejs version 20 enabled"
 
 dnf install nodejs -y&>> $log_file
-VALIDATE $? "nodejs installed" | tee -a $log_file
+VALIDATE $? "nodejs installed"
 
 id roboshop &>> $log_file
 if [ $? -ne 0 ]; then
     useradd --system --home /app --shell /sbin/nologin --comment "roboshop system user" roboshop 
-    VALIDATE $? "adding user" &>> $log_file
+    VALIDATE $? "adding user"
 else
     echo "Roboshop user already exists"
 fi
@@ -63,7 +63,7 @@ cd /app
 
 rm -rf /app/*
 
-unzip /tmp/user.zip
+unzip /tmp/user.zip&>> $log_file
 
 npm install &>> $log_file
 
@@ -74,10 +74,10 @@ systemctl daemon-reload
 systemctl enable user &>> $log_file
 
 systemctl start user &>> $log_file
-VALIDATE $? "user enabled ... started" | tee -a $log_file
+VALIDATE $? "user enabled ... started"
 
 systemctl restart user &>> $log_file
-VALIDATE $? "user restart" | tee -a $log_file
+VALIDATE $? "user restart"
 
 
 

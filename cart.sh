@@ -46,12 +46,12 @@ dnf module enable nodejs:20 -y &>> $log_file
 VALIDATE $? "nodejs version 20 enabled"
 
 dnf install nodejs -y&>> $log_file
-VALIDATE $? "nodejs installed" | tee -a $log_file
+VALIDATE $? "nodejs installed"
 
 id roboshop &>> $log_file
 if [ $? -ne 0 ]; then
     useradd --system --home /app --shell /sbin/nologin --comment "roboshop system user" roboshop 
-    VALIDATE $? "adding user" &>> $log_file
+    VALIDATE $? "adding user"
 else
     echo "Roboshop user already exists"
 fi
@@ -64,7 +64,7 @@ cd /app
 
 rm -rf /app/*
 
-unzip /tmp/cart.zip
+unzip /tmp/cart.zip &>> $log_file
 
 npm install &>> $log_file
 
@@ -75,10 +75,10 @@ systemctl daemon-reload
 systemctl enable cart &>> $log_file
 
 systemctl start cart &>> $log_file
-VALIDATE $? "cart enabled ... started" | tee -a $log_file
+VALIDATE $? "cart enabled ... started"
 
 systemctl restart cart &>> $log_file
-VALIDATE $? "cart restart" | tee -a $log_file
+VALIDATE $? "cart restart"
 
 
 
