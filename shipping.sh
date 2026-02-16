@@ -86,7 +86,7 @@ SCHEMA_FILE="/app/db/schema.sql"
 
 # 1. Check if a specific database exists (e.g., 'cities')
 # Replace 'cities' with the actual database name used in your schema
-mysql -h $mysql_host -u$DB_USER -p$DB_PASS -e "SHOW DATABASES LIKE 'cities';" | grep "cities" &>> $log_file
+mysql -h $mysql_host -u$DB_USER -p$DB_PASS -e "SHOW DATABASES LIKE 'cities';" | grep -w "cities" &>> $log_file
 
 if [ $? -ne 0 ]; then
     echo "Schema not found. Loading schema..."
