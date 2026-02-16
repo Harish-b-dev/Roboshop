@@ -6,6 +6,7 @@ log_file="$logs_folder/$0.log"
 command_type=$1
 start_time=$(date +%s)
 Working_dir="/home/ec2-user"
+Mongodb_host="mongodb.learndaws88s.online"
 
 #set -e
 #trap 'echo "there is an error at $LINENO, command :: $BASH_COMMAND"' ERR
@@ -58,23 +59,23 @@ fi
 mkdir -p /app 
 
 
-curl -L -o /tmp/user.zip https://roboshop-artifacts.s3.amazonaws.com/user-v3.zip 
+curl -L -o /tmp/cart.zip https://roboshop-artifacts.s3.amazonaws.com/cart-v3.zip
 cd /app
 
 rm -rf /app/*
 
-unzip /tmp/user.zip
+unzip /tmp/cart.zip
 
 npm install &>> $log_file
 
-cp $Working_dir/Roboshop/user.service /etc/systemd/system/user.service
+cp $Working_dir/Roboshop/cart.service /etc/systemd/system/cart.service
 
 systemctl daemon-reload
 
-systemctl enable user &>> $log_file
+systemctl enable cart &>> $log_file
 
-systemctl start user &>> $log_file
-VALIDATE $? "user enabled ... started" | tee -a $log_file
+systemctl start cart &>> $log_file
+VALIDATE $? "cart enabled ... started" | tee -a $log_file
 
 systemctl restart user &>> $log_file
 VALIDATE $? "user restart" | tee -a $log_file
