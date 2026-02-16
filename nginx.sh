@@ -40,11 +40,6 @@ VALIDATE(){
 dnf module install nginx:1.24 -y &>> $log_file
 VALIDATE $? "Nginx version 1.24 ... installation"
 
-
-systemctl enable nginx
-systemctl start nginx
-VALIDATE $? "Nginx enabled and started"
-
 rm -rf /usr/share/nginx/html/*
 
 curl -o /tmp/frontend.zip https://roboshop-artifacts.s3.amazonaws.com/frontend-v3.zip &>> $log_file
@@ -57,6 +52,10 @@ VALIDATE $? "Nginx page unziped"
 
 cp /home/ec2-user/Roboshop/nginx.conf /etc/nginx/nginx.conf
 VALIDATE $? "nginx.conf updated" &>> $log_file
+
+systemctl enable nginx
+systemctl start nginx
+VALIDATE $? "Nginx enabled and started"
 
 systemctl restart nginx
 VALIDATE $? "Nginx restart"
