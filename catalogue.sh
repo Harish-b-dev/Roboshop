@@ -91,8 +91,8 @@ else
 
 fi
 
-systemctl reload catalogue &>> $log_file
-VALIDATE $? "catalogue reload" | tee -a $log_file
+systemctl restart catalogue &>> $log_file
+VALIDATE $? "catalogue restart" | tee -a $log_file
 
 
 
