@@ -48,7 +48,7 @@ VALIDATE $? "rabbitmq-server start"
 sudo rabbitmqctl authenticate_user roboshop roboshop123
 
 if [ $? -ne 0 ]; then
-    echo -e "rabbitmq-server user name and password is not changed ... $B changing $Y"
+    echo -e "rabbitmq-server user name and password is not changed ... $B changing$Y"
     rabbitmqctl add_user roboshop roboshop123
     VALIDATE $? "rabbitmq-server user name and password update"
 
