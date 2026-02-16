@@ -45,21 +45,21 @@ systemctl enable nginx
 systemctl start nginx
 VALIDATE $? "Nginx enabled and started"
 
-#rm -rf /usr/share/nginx/html/*
-#
-#curl -o /tmp/frontend.zip https://roboshop-artifacts.s3.amazonaws.com/frontend-v3.zip &>> $log_file
-#
-#cd /usr/share/nginx/html
-#unzip /tmp/frontend.zip
-#VALIDATE $? "Nginx page unziped"
-#
-#rm -rf /etc/nginx/nginx.conf
-#
-#cp $Working_dir/nginx.conf /etc/nginx/nginx.conf
-#VALIDATE $? "nginx.conf updated" &>> $log_file
-#
-#systemctl restart nginx
-#VALIDATE $? "Nginx restart"
+rm -rf /usr/share/nginx/html/*
+
+curl -o /tmp/frontend.zip https://roboshop-artifacts.s3.amazonaws.com/frontend-v3.zip &>> $log_file
+
+cd /usr/share/nginx/html
+unzip /tmp/frontend.zip
+VALIDATE $? "Nginx page unziped"
+
+rm -rf /etc/nginx/nginx.conf
+
+cp $Working_dir/nginx.conf /etc/nginx/nginx.conf
+VALIDATE $? "nginx.conf updated" &>> $log_file
+
+systemctl restart nginx
+VALIDATE $? "Nginx restart"
 
 end_time=$(date +%s)
 final_time=$(($end_time - $start_time))
