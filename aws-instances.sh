@@ -54,7 +54,7 @@ do
     }
     '
 
-    echo "record updated for $instance"
+    echo "record updated for $instance, and IP is $IP"
 
 
     

@@ -35,9 +35,9 @@ VALIDATE(){
 }
 
 
-#dnf module disable nginx -y &>> $log_file
-#dnf module enable nginx:1.24 -y &>> $log_file
-dnf module install nginx:1.24 -y &>> $log_file
+dnf module disable nginx -y &>> $log_file
+dnf module enable nginx:1.24 -y &>> $log_file
+dnf install nginx -y &>> $log_file
 VALIDATE $? "Nginx version 1.24 ... installation"
 
 rm -rf /usr/share/nginx/html/*
@@ -45,13 +45,13 @@ rm -rf /usr/share/nginx/html/*
 curl -o /tmp/frontend.zip https://roboshop-artifacts.s3.amazonaws.com/frontend-v3.zip &>> $log_file
 
 cd /usr/share/nginx/html
-unzip /tmp/frontend.zip
+unzip /tmp/frontend.zip &>> $log_file
 VALIDATE $? "Nginx page unziped"
 
-#rm -rf /etc/nginx/nginx.conf
+rm -rf /etc/nginx/nginx.conf
 
 cp /home/ec2-user/Roboshop/nginx.conf /etc/nginx/nginx.conf
-VALIDATE $? "nginx.conf updated" &>> $log_file
+VALIDATE $? "nginx.conf updated"
 
 systemctl enable nginx
 systemctl start nginx
