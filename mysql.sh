@@ -58,3 +58,7 @@ if [ $? -eq 0 ]; then
 else
     echo "STATUS: MySQL root password is SET (Access Denied for empty password)."
 fi
+
+end_time=$(date +%s)
+final_time=$(($end_time - $start_time))
+echo "script executed at $final_time"
