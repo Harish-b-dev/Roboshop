@@ -36,9 +36,9 @@ VALIDATE(){
 
 dnf list installed nginx &>> $log_file
 if [ $? -ne 0 ]; then
-    dnf module disable nginx -y &>> $log_file
-    dnf module enable nginx:1.24 -y &>> $log_file
-    dnf install nginx -y &>> $log_file
+    #dnf module disable nginx -y &>> $log_file
+    #dnf module enable nginx:1.24 -y &>> $log_file
+    dnf module install nginx:1.24 -y &>> $log_file
     VALIDATE $? "Nginx version 1.24 ... installation"
 
 else
