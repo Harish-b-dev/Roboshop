@@ -44,6 +44,8 @@ if [ $? -ne 0 ]; then
 else
     echo -e "nginx is already installed ... $Y skipping $N" | tee -a $log_file
 
+fi
+
 systemctl enable nginx &>> $log_file
 systemctl start nginx &>> $log_file
 VALIDATE $? "Nginx enabled and started"

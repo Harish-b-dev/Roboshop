@@ -45,6 +45,7 @@ if [ $? -ne 0 ]; then
 else
     echo -e "redis is already installed ... $Y skipping $N" | tee -a $log_file
 
+fi
 
 sed -i '/s/127.0.0.1/0.0.0.0/g'
 
