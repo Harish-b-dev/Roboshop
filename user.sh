@@ -79,8 +79,8 @@ VALIDATE $? "user enabled ... started" | tee -a $log_file
 
 cp $Working_dir/Roboshop/mongo.repo /etc/yum.repos.d/mongo.repo
 
-systemctl restart catalogue &>> $log_file
-VALIDATE $? "catalogue restart" | tee -a $log_file
+systemctl restart user &>> $log_file
+VALIDATE $? "user restart" | tee -a $log_file
 
 
 
