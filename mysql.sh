@@ -43,16 +43,18 @@ systemctl start mysqld
 VALIDATE $? "Mysql server ... start" 
 
 
-mysql_secure_installation --set-root-pass RoboShop@1
+
 
 #!/bin/bash
 
 # Attempt to log in to MySQL root with NO password
 # -e "exit" immediately quits after a successful connection
-#mysql -u root --skip-RoboShop@1 -e "exit" &> /dev/null
+mysql -u root --skip-RoboShop@1 -e "exit" &> /dev/null
 
-#if [ $? -eq 0 ]; then
-#    echo "STATUS: MySQL root password is still EMPTY (or NOT set)."
-#else
-#    echo "STATUS: MySQL root password is SET (Access Denied for empty password)."
-#fi
+if [ $? -eq 0 ]; then
+    echo "STATUS: MySQL root password is still EMPTY (or NOT set)."
+    mysql_secure_installation --set-root-pass RoboShop@1
+    VALIDATE $? "Mysql server ... root password"
+else
+    echo "STATUS: MySQL root password is SET (Access Denied for empty password)."
+fi
