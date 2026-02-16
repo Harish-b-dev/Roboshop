@@ -58,6 +58,8 @@ cd /usr/share/nginx/html
 unzip /tmp/frontend.zip
 VALIDATE $? "Nginx version 1.24 ... installation"
 
+rm -rf /etc/nginx/nginx.conf
+
 cp $Working_dir/nginx.conf /etc/nginx/nginx.conf
 VALIDATE $? "nginx.conf updated" &>> $log_file
 
