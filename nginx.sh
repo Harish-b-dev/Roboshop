@@ -40,16 +40,10 @@ VALIDATE(){
 dnf module install nginx:1.24 -y &>> $log_file
 VALIDATE $? "Nginx version 1.24 ... installation"
 
-systemctl status nginx
-if [ $? -ne 0 ]; then
-    systemctl enable nginx
-    systemctl start nginx
-    VALIDATE $? "Nginx enabled and started"
 
-else
-    echo "Nginx is already enabled and started"
-
-fi
+systemctl enable nginx
+systemctl start nginx
+VALIDATE $? "Nginx enabled and started"
 
 rm -rf /usr/share/nginx/html/*
 
