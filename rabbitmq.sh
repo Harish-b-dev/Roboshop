@@ -45,9 +45,9 @@ VALIDATE $? "rabbitmq-server enable"
 systemctl start rabbitmq-server
 VALIDATE $? "rabbitmq-server start"
 
-sudo rabbitmqctl authenticate_user guest guest
+sudo rabbitmqctl authenticate_user roboshop roboshop123
 
-if [ $? -eq 0 ]; then
+if [ $? -ne 0 ]; then
     echo -e "rabbitmq-server user name and password is not changed ... $B changing $Y"
     rabbitmqctl add_user roboshop roboshop123
     VALIDATE $? "rabbitmq-server user name and password update"
@@ -59,3 +59,7 @@ else
     echo "$Y Skipping ... user name, password, permissions $N set up are already updated in rabbitmq-server"
 
 fi
+
+end_time=$(date +%s)
+final_time=$(($end_time - $start_time))
+echo "script executed at $final_time"
