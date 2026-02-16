@@ -37,7 +37,7 @@ VALIDATE(){
 
 #dnf module disable nginx -y &>> $log_file
 #dnf module enable nginx:1.24 -y &>> $log_file
-dnf module install nginx.24 -y &>> $log_file
+dnf module install nginx:1.24 -y &>> $log_file
 VALIDATE $? "Nginx version 1.24 ... installation"
 
 systemctl enable nginx
