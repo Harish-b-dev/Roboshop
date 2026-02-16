@@ -45,7 +45,7 @@ VALIDATE $? "nodejs disabled"
 dnf module enable nodejs:20 -y &>> $log_file
 VALIDATE $? "nodejs version 20 enabled"
 
-dnf install nodejs -y
+dnf install nodejs -y&>> $log_file
 VALIDATE $? "nodejs installed" | tee -a $log_file
 
 id roboshop &>> $log_file
@@ -59,40 +59,40 @@ fi
 mkdir -p /app 
 
 
-#curl -o /tmp/catalogue.zip https://roboshop-artifacts.s3.amazonaws.com/catalogue-v3.zip 
-#cd $Working_dir/app
-#
-#rm -rf $Working_dir/app/*
-#
-#unzip /tmp/catalogue.zip
-#
-#npm install &>> $log_file
-#
-#cp $Working_dir/Roboshop/catalogue.service /etc/systemd/system/catalogue.service
-#
-#systemctl daemon-reload
-#
-#systemctl enable catalogue &>> $log_file
-#
-#systemctl start catalogue &>> $log_file
-#VALIDATE $? "catalogue enabled ... started" | tee -a $log_file
-#
-#cp $Working_dir/Roboshop/mongo.repo /etc/yum.repos.d/mongo.repo
-#
-#dnf install mongodb-mongosh -y &>> $log_file
-#
-#INDEX=$(mongosh --host $Mongodb_host --quiet  --eval 'db.getMongo().getDBNames().indexOf("catalogue")')
-#
-#if [ $INDEX -le 0 ]; then
-#    mongosh --host $Mongodb_host <$Working_dir/app/db/master-data.js &>> $log_file
-#
-#else
-#    echo -e "schem is already loaded ... $Y skipping $N" | tee -a $log_file
-#
-#fi
-#
-#systemctl reload catalogue | tee -a $log_file
-#VALIDATE $? "catalogue reloaded" | tee -a $log_file
+curl -o /tmp/catalogue.zip https://roboshop-artifacts.s3.amazonaws.com/catalogue-v3.zip 
+cd /app
+
+rm -rf /app/*
+
+unzip /tmp/catalogue.zip
+
+npm install &>> $log_file
+
+cp $Working_dir/Roboshop/catalogue.service /etc/systemd/system/catalogue.service
+
+systemctl daemon-reload
+
+systemctl enable catalogue &>> $log_file
+
+systemctl start catalogue &>> $log_file
+VALIDATE $? "catalogue enabled ... started" | tee -a $log_file
+
+cp $Working_dir/Roboshop/mongo.repo /etc/yum.repos.d/mongo.repo
+
+dnf install mongodb-mongosh -y &>> $log_file
+
+INDEX=$(mongosh --host $Mongodb_host --quiet  --eval 'db.getMongo().getDBNames().indexOf("catalogue")')
+
+if [ $INDEX -le 0 ]; then
+    mongosh --host $Mongodb_host <$Working_dir/app/db/master-data.js &>> $log_file
+
+else
+    echo -e "schem is already loaded ... $Y skipping $N" | tee -a $log_file
+
+fi
+
+systemctl reload catalogue | tee -a $log_file
+VALIDATE $? "catalogue reloaded" | tee -a $log_file
 
 
 
