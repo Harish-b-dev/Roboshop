@@ -56,7 +56,7 @@ curl -o /tmp/frontend.zip https://roboshop-artifacts.s3.amazonaws.com/frontend-v
 
 cd /usr/share/nginx/html
 unzip /tmp/frontend.zip
-VALIDATE $? "Nginx version 1.24 ... installation"
+VALIDATE $? "Nginx page unziped"
 
 rm -rf /etc/nginx/nginx.conf
 
